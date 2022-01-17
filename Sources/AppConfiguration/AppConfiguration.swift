@@ -1,6 +1,17 @@
-public struct AppConfiguration {
-    public private(set) var text = "Hello, World!"
+@MainActor
+public protocol AppConfigurationModule {
+    
+    static func setup()
+    
+}
 
-    public init() {
+@MainActor
+public struct AppConfiguration {
+    
+    public static func setup(_ configurationModuleTypes: AppConfigurationModule.Type...) {
+        for configurationModuleType in configurationModuleTypes {
+            configurationModuleType.setup()
+        }
     }
+    
 }
